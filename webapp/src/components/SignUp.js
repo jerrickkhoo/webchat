@@ -18,13 +18,12 @@ const handleSignUp = async (e) => {
     await axios
       .post("/api/users/signup", newUser)
       .then((response) => {
-        alert("Account created, please log into your account.");
+          console.log(response)
+        alert(response?.data?.message);
         navigate("/login", { replace: true });
       })
       .catch((err) => {
-        alert(
-          "Failed to create account, kindly check if the email is already registered."
-        );
+        alert(err.response.data.message);
       });
 
 }

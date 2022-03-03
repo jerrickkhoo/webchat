@@ -4,21 +4,47 @@ import { useState, useEffect } from "react";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
-import Profile from "./components/Profile";
-
+import MyProfile from "./components/MyProfile";
+import Settings from "./components/Settings";
 
 function App() {
-
- 
+  const ProtectedRoute = ({ children, redirectTo }) => {
+    return localStorage.getItem("loggedIn") ==='true' ? (
+      children
+    ) : (
+      <Navigate to={redirectTo} />
+    );
+  };
 
   return (
     <div className="App">
-      <h1>Webapp</h1>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/myprofile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/"
+          element={
+            // <ProtectedRoute redirectTo="/login">
+              <Home />
+            // </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/myprofile"
+          element={
+            <ProtectedRoute redirectTo="/login">
+              <MyProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute redirectTo="/login">
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </div>
   );

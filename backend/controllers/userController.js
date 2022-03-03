@@ -15,7 +15,12 @@ router.post("/signup", async (req, res) => {
   );
   try {
     const createdUser = await User.create(req.body);
-    res.status(200).json({ message: "user created", data: createdUser });
+    res
+      .status(200)
+      .json({
+        message: "Account created, please log into your account.",
+        data: createdUser,
+      });
   } catch (error) {
     res.status(400).json({
       message:
@@ -35,8 +40,17 @@ router.post("/login", async (req, res) => {
     } else {
       const result = await bcrypt.compare(password, foundUser.password);
       if (result) {
-          const accessToken = jwt.sign({id:foundUser._id, username:foundUser.username, img:foundUser.img},SECRET)
-        res.status(200).json({ message: "user is loggedin", data: foundUser , accessToken});
+        const accessToken = jwt.sign(
+          {
+            id: foundUser._id,
+            username: foundUser.username,
+            img: foundUser.img,
+          },
+          SECRET
+        );
+        res
+          .status(200)
+          .json({ message: "user is loggedin", data: foundUser, accessToken });
       } else {
         res.status(400).json({
           status: "not ok",
@@ -54,41 +68,59 @@ router.post("/login", async (req, res) => {
 
 //verify token
 const verify = (req, res, next) => {
-    const authToken = req.headers.authorization;
-    if(authToken){
-        const token = authToken.split(' ')[1]
-        jwt.verify(token, SECRET, (error, decoded) => {
-            if (error){
-                return res.status(400).json('Token is not valid')
-            }
-            req.user = decoded
-            next()
-        })
+  const authToken = req.headers.authorization;
+  if (authToken) {
+    const token = authToken.split(" ")[1];
+    jwt.verify(token, SECRET, (error, decoded) => {
+      if (error) {
+        return res.status(400).json("Token is not valid");
+      }
+      req.user = decoded;
+      next();
+    });
+  } else {
+    res.status(400).json("You are not authenticated");
+  }
+};
+
+//update
+router.put("/:userID", verify, async (req, res) => {
+  try {
+    if (req.user.id === req.params.userID) {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.params.userID },
+        {
+          username: req.body.username,
+          email: req.body.email,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10)),
+          img: req.body.img,
+        },
+        { new: true }
+      );
+
+      res.status(200).json({ message: "User updated", data: updatedUser });
     } else {
-        res.status(400).json('You are not authenticated')
+      res.status(400).json("You are not allowed to update details");
     }
-
-}
-
-//logout
-
-
+  } catch (error) {
+    res.status(400).json({ message: "Failed to update user details ", error: error });
+  }
+});
 
 //delete
-router.delete('/:userID', verify, async (req, res) => {
-try {
-  if (req.user.id === req.params.userID) {
-    const updatedUser = await User.findOneAndDelete({ _id: req.params.userID });
-    res.status(200).json({ message: "User Deleted", data: updatedUser });
-  } else {
-    res.status(400).json("You are not allowed to delete");
+router.delete("/:userID", verify, async (req, res) => {
+  try {
+    if (req.user.id === req.params.userID) {
+      const updatedUser = await User.findOneAndDelete({
+        _id: req.params.userID,
+      });
+      res.status(200).json({ message: "User Deleted", data: updatedUser });
+    } else {
+      res.status(400).json("You are not allowed to delete");
+    }
+  } catch (error) {
+    res.status(400).json({ message: "Failed to delete user ", error: error });
   }
-} catch (error) {
-  res
-    .status(400)
-    .json({ message: "Failed to delete user ", error: error });
-}
-
-})
+});
 
 module.exports = router;

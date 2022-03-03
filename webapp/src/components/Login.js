@@ -15,8 +15,16 @@ const Login = () => {
       .post("/api/users/login", user, {})
       .then((response) => {
         if (response.data.accessToken) {
-            console.log(response)
-          localStorage.setItem("user", JSON.stringify(response.data));
+          console.log(response);
+          localStorage.setItem("user", JSON.stringify(response.data.data));
+          localStorage.setItem(
+            "token",
+            JSON.stringify(response.data.accessToken)
+          );
+          localStorage.setItem(
+            "loggedIn",
+            JSON.stringify(true)
+          );
         }
         navigate("/myprofile", { replace: true });
       })
@@ -30,7 +38,7 @@ const Login = () => {
       <div>
         <h1>Log In</h1>
       </div>
-      <div >
+      <div>
         <form onSubmit={handleSubmit}>
           <div>
             <label>E-Mail</label>
@@ -42,9 +50,7 @@ const Login = () => {
             <input type="password" name="password" placeholder="Password" />
           </div>
 
-          <button>
-            Submit
-          </button>
+          <button>Submit</button>
         </form>
         <a href="/signup">Create an Account</a>
       </div>
