@@ -26,7 +26,7 @@ const Login = () => {
             JSON.stringify(true)
           );
         }
-        navigate("/myprofile", { replace: true });
+        navigate("/", { replace: true });
       })
       .catch((err) => {
         alert(err.response.data.message);

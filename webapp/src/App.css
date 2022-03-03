@@ -91,3 +91,86 @@
 .roomchatinfo{
   margin-left: 15px;
 }
+
+.chat{
+  display: flex;
+  flex-direction: column;
+  flex: 0.65;
+}
+
+.chatheader{
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.chatheaderinfo{
+  flex: 1;
+  padding-left: 20px;
+}
+
+#chatheaderinfoh3{
+  margin-bottom: 3px;
+  font-weight: 500;
+}
+
+#chatheaderinfop{
+  color: gray;
+}
+
+.chatbody{
+  flex:1;
+  background-color: #ededed;
+  padding: 30px;
+  overflow: scroll;
+}
+
+.chatmessage{
+  position: relative;
+  font-size: 16px;
+  padding: 10px;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 30px;
+}
+
+.chatsend{
+  margin-left: auto;
+  background-color: #dcf8c6;
+}
+
+.chattimestamp{
+  margin-left: 10px;
+  font-size: xx-small;
+}
+
+.chatname{
+  position: absolute;
+  top:-15px;
+  font-weight: 800;
+  font-size: x-small;
+}
+
+.chatfooter{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 62px;
+  border-top: 1px solid lightgray;
+}
+
+#chatfooterform{
+  flex: 1;
+  display: flex;
+}
+
+#chatfooterinput{
+  flex: 1;
+  border-radius: 30px;
+  padding: 10px;
+  border: none;
+  outline-width: 0;
+
+}

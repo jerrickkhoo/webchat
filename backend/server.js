@@ -1,6 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const userController = require('./controllers/userController')
+const chatController = require('./controllers/chatController')
+const messageController = require('./controllers/messageController')
+
 
 require('dotenv').config()
 const app = express()
@@ -27,6 +30,10 @@ app.use(express.urlencoded({ extended: false }));
 
 
 app.use('/api/users', userController)
+app.use("/api/chats", chatController);
+app.use("/api/messages", messageController);
+
+
 
 app.listen(port, () => {
     console.log(`Server is now listening at http://localhost:${port}`)

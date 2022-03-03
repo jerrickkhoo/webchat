@@ -15,17 +15,32 @@ router.post("/signup", async (req, res) => {
   );
   try {
     const createdUser = await User.create(req.body);
-    res
-      .status(200)
-      .json({
-        message: "Account created, please log into your account.",
-        data: createdUser,
-      });
+    res.status(200).json({
+      message: "Account created, please log into your account.",
+      data: createdUser,
+    });
   } catch (error) {
     res.status(400).json({
       message:
         "Failed to create account, kindly check if the email is already registered. ",
       error: error,
+    });
+  }
+});
+
+//get
+router.get("/:ID", async (req, res) => {
+  const { ID } = req.params;
+  try {
+    const foundUser = await User.findOne({ _id: ID });
+    res.status(200).json({
+      message: "fetched an account under this email ",
+      data: foundUser,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Fail To fetch any account under this email ",
+      error: err,
     });
   }
 });
@@ -103,7 +118,9 @@ router.put("/:userID", verify, async (req, res) => {
       res.status(400).json("You are not allowed to update details");
     }
   } catch (error) {
-    res.status(400).json({ message: "Failed to update user details ", error: error });
+    res
+      .status(400)
+      .json({ message: "Failed to update user details ", error: error });
   }
 });
 
