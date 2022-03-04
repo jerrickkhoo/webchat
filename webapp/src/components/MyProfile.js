@@ -13,8 +13,8 @@ const MyProfile = () => {
   const handleLogOut = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    localStorage.removeItem("loggedIn");
-
+          localStorage.setItem("loggedin", JSON.stringify(false));
+    localStorage.removeItem("chat");
     navigate('/login', {replace: true})
 
   };

@@ -19,14 +19,14 @@ const RoomChat = ({ chats }) => {
       }
     };
     getFriend();
-  });
+  },[chats.participants, user._id]);
 
   return (
     <div className="roomchat">
-      <Avatar src={friendData.img}/>
+      <Avatar src={friendData?.img}/>
       <div className="roomchatinfo">
-        <h2 id="roomchath2">{friendData.username}</h2>
-        <p>Last message</p>
+        <h2 id="roomchath2">{friendData?.username}</h2>
+        {/* <p>Last message</p> */}
       </div>
     </div>
   );

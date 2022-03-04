@@ -45,6 +45,22 @@ router.get("/:ID", async (req, res) => {
   }
 });
 
+router.get("/search/:name", async (req, res) => {
+  const { name } = req.params;
+  try {
+    const foundUser = await User.find({ username: name  });
+    res.status(200).json({
+      message: "fetched an account under this email ",
+      data: foundUser,
+    });
+  } catch (err) {
+    res.status(400).json({
+      message: "Fail To fetch any account under this email ",
+      error: err,
+    });
+  }
+});
+
 //login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;

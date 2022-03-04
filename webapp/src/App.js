@@ -16,16 +16,31 @@ function App() {
     );
   };
 
+  const LoggedIn = ({ children, redirectTo }) => {
+    return localStorage.getItem("loggedIn"===false) ? (
+      children
+    ) : (
+      <Navigate to={redirectTo} />
+    );
+  };
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/login"
+          element={
+            // <LoggedIn redirectTo="/">
+              <Login />
+            // </LoggedIn>
+          }
+        />
         <Route path="/signup" element={<SignUp />} />
         <Route
           path="/"
           element={
             // <ProtectedRoute redirectTo="/login">
-              <Home />
+            <Home />
             // </ProtectedRoute>
           }
         />
