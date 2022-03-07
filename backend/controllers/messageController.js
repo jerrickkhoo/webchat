@@ -22,5 +22,30 @@ router.get("/:chatID", async (req, res) => {
   }
 });
 
+//delete
+router.put("/delete/:messageID", async (req, res) => {
+  try {
+      const deleteMessage = await Message.findByIdAndUpdate(
+        req.params.messageID, 
+        {body: req.body.body},
+        { new: true });
+      res.status(200).json({ message: "message deleted", data: deleteMessage });
+    } catch (err) {
+      res.status(400).json({ message: "fail to delete essage ", error: err });
+    }
+  })
+
+//edit
+router.put("/:messageID", async (req, res) => {
+  try {
+      const editedMessage = await Message.findByIdAndUpdate(
+        req.params.messageID, 
+        {body: req.body.body},
+        { new: true });
+      res.status(200).json({ message: "message edited", data: editedMessage });
+    } catch (err) {
+      res.status(400).json({ message: "fail to edit essage ", error: err });
+    }
+  })
 
 module.exports = router;

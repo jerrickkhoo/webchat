@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 const Settings = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user"));
-const token = JSON.parse(localStorage.getItem("token"));
+  const token = JSON.parse(localStorage.getItem("token"));
 
-  console.log(user)
+  console.log(user);
 
   const handleEdit = async (e) => {
     e.preventDefault();
@@ -33,54 +33,60 @@ const token = JSON.parse(localStorage.getItem("token"));
   };
 
   return (
-    <div>
-      <div>
-        <h1>Join Us</h1>
-      </div>
-      <div>
-        <form onSubmit={handleEdit}>
-          <div>
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              defaultValue={user?.username}
-              required
-            />
-          </div>
+    <div className="login">
+      <div className="logincontainer">
+        <h1>Settings</h1>
+        <br />
+        <div>
+          <form onSubmit={handleEdit}>
+            <div>
+              <label>Username: </label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                defaultValue={user?.username}
+                required
+              />
+            </div>
 
-          <div>
-            <label id="font">E-Mail</label>
-            <input
-              type="text"
-              name="email"
-              placeholder="E-Mail"
-              required
-              defaultValue={user?.email}
-            />
-          </div>
+            <div>
+              <label id="font">E-Mail: </label>
+              <input
+                type="text"
+                name="email"
+                placeholder="E-Mail"
+                required
+                defaultValue={user?.email}
+              />
+            </div>
 
-          <div>
-            <label id="font">Profile Picture</label>
-            <input type="text" name="img" placeholder="Image Link"  defaultValue={user?.img}/>
-          </div>
+            <div>
+              <label id="font">Profile Picture: </label>
+              <input
+                type="text"
+                name="img"
+                placeholder="Image Link"
+                defaultValue={user?.img}
+              />
+            </div>
 
-          <div>
-            <label id="font">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Please enter new password"
-              required
-            />
-          </div>
+            <div>
+              <label id="font">Password: </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Please enter new password"
+                required
+              />
+            </div>
 
-          <button type="submit" id="font">
-            Submit
-          </button>
-        </form>
-        <a href="/myprofile">Back</a>
+            <button type="submit" className='loginbutton'>
+              Submit
+            </button>
+          </form>
+          <a href="/myprofile">Back</a>
+        </div>
       </div>
     </div>
   );

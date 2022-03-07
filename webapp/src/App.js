@@ -17,7 +17,7 @@ function App() {
   };
 
   const LoggedIn = ({ children, redirectTo }) => {
-    return localStorage.getItem("loggedIn"===false) ? (
+    return localStorage.getItem("loggedIn")==='false' ? (
       children
     ) : (
       <Navigate to={redirectTo} />
@@ -30,9 +30,9 @@ function App() {
         <Route
           path="/login"
           element={
-            // <LoggedIn redirectTo="/">
+            <LoggedIn redirectTo="/">
               <Login />
-            // </LoggedIn>
+           </LoggedIn>
           }
         />
         <Route path="/signup" element={<SignUp />} />

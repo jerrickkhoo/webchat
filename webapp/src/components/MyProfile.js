@@ -13,7 +13,7 @@ const MyProfile = () => {
   const handleLogOut = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-          localStorage.setItem("loggedin", JSON.stringify(false));
+    localStorage.setItem("loggedIn", JSON.stringify(false));
     localStorage.removeItem("chat");
     navigate('/login', {replace: true})
 
@@ -43,7 +43,7 @@ const MyProfile = () => {
   }
 
   return (
-    <div>
+    <div className='login'>
       <h1>Profile</h1>
       <img style={{height: '200px'}}src={user?.img} alt='profile pic'/>
       <h2>Username: {user?.username}</h2>

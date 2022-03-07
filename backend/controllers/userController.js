@@ -28,7 +28,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-//get
+//get by ID
 router.get("/:ID", async (req, res) => {
   const { ID } = req.params;
   try {
@@ -45,6 +45,7 @@ router.get("/:ID", async (req, res) => {
   }
 });
 
+//get by name
 router.get("/search/:name", async (req, res) => {
   const { name } = req.params;
   try {

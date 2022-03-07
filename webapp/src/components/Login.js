@@ -34,23 +34,22 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Log In</h1>
-      </div>
-      <div>
+    <div className="login">
+      <div className="logincontainer">
+        <h1>Log In </h1>
+        <br />
         <form onSubmit={handleSubmit}>
           <div>
-            <label>E-Mail</label>
+            <label>E-Mail: </label>
             <input type="text" name="email" placeholder="E-Mail" />
           </div>
 
           <div>
-            <label>Password</label>
+            <label>Password: </label>
             <input type="password" name="password" placeholder="Password" />
           </div>
 
-          <button>Submit</button>
+          <button className="loginbutton">Submit</button>
         </form>
         <a href="/signup">Create an Account</a>
       </div>
