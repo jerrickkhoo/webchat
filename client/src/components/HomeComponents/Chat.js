@@ -154,8 +154,6 @@ const Chat = ({ chatClicked }) => {
 
 
 
-
-
   console.log(friendData);
   return (
     <div className="chat">
@@ -171,7 +169,11 @@ const Chat = ({ chatClicked }) => {
           </IconButton>
         </div>
       </div>
-      <div className="chatbody">{userMessages}</div>
+      <div className="chatbody">
+        <div className='chatbody2'>
+        {userMessages}
+        </div>
+        </div>
       <div className="chatfooter">
         <form id="chatfooterform" onSubmit={handleSubmit}>
           <input
