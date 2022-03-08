@@ -7,8 +7,8 @@ const MyProfile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = JSON.parse(localStorage.getItem("token"));
 
-  console.log(user);
-  console.log(token)
+  // console.log(user);
+  // console.log(token)
 
   const handleLogOut = () => {
     localStorage.removeItem("user");

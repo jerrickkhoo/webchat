@@ -124,6 +124,8 @@
   background-color: #ededed;
   padding: 30px;
   overflow: scroll;
+  position: relative;
+  bottom: 0;
 }
 
 .chatmessage{

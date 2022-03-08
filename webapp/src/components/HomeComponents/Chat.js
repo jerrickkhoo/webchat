@@ -6,26 +6,29 @@ import SendIcon from "@material-ui/icons/Send";
 import EditIcon from "@material-ui/icons/Edit";
 import axios from "axios";
 import Edit from "@material-ui/icons/Edit";
+import Pusher from "pusher-js";
+
 
 const Chat = ({ chatClicked }) => {
-  console.log('chatclicked',chatClicked);
+  // console.log('chatclicked',chatClicked);
   const [messages, setMessages] = useState([]);
   const [friendData, setFriendData] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
+  console.log('chatclicked', chatClicked);
+
   
   useEffect(() => {
     const getMessages = async () => {
       try {
         const response = await axios.get(`/api/messages/${chatClicked?._id}`);
-        console.log(response?.data?.message);
+        // console.log(response?.data?.message);
         setMessages(response?.data?.message);
       } catch (err) {
         console.log(err);
       }
     };
     getMessages();
-  }, [chatClicked]);
+  }, [chatClicked._id]);
   
   useEffect(() => {
     const friendID = chatClicked.participants.find((ID) => ID !== user._id);
@@ -39,7 +42,25 @@ const Chat = ({ chatClicked }) => {
     };
     getFriend();
   }, [chatClicked.participants, user._id]);
+
+  // console.log(messages)
   
+  useEffect(() => {
+    const pusher = new Pusher("37faff3d0d75937717d5", {
+      cluster: "ap1",
+    });
+    const channel = pusher.subscribe("messages");
+    channel.bind("inserted", function (data) {
+      console.log(data)
+      if (data?.chatID === chatClicked?._id)
+      setMessages([...messages, data])
+    });
+    return () => {
+      channel.unbind_all()
+      channel.unsubscribe()}
+    }, [messages]);
+    
+
   // handleDelete = (e) => {
     //   e.preventDefault()
     //   await axios.post(`/api/messages/`)
@@ -53,7 +74,7 @@ const Chat = ({ chatClicked }) => {
         // }
         
         const userMessages = messages.map((item, index) => {
-          console.log(item)
+          // console.log(messages)
           if (item?.senderID === user._id) {
             const deletedMessage = {
               body: 'Message deleted'
@@ -131,6 +152,10 @@ const Chat = ({ chatClicked }) => {
       e.target.body.value=''
   };
 
+
+
+
+
   console.log(friendData);
   return (
     <div className="chat">
@@ -154,6 +179,7 @@ const Chat = ({ chatClicked }) => {
             placeholder="type here"
             type="text"
             name="body"
+            required
           />
           <IconButton type="submit">
             <SendIcon />

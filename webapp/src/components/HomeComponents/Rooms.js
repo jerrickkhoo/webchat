@@ -92,9 +92,9 @@ const handleSubmit = async (e) => {
 return (
   <div className="rooms">
     <div className="roomsheader">
-      <Avatar src={user.img} />
+      <Avatar src={user?.img} />
       <div className="roomsheaderright">
-        <span>{user.username}</span>
+        <span>{user?.username}</span>
         <IconButton onClick={settings}>
           <SettingsIcon />
         </IconButton>

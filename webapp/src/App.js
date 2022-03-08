@@ -16,13 +16,15 @@ function App() {
     );
   };
 
-  const LoggedIn = ({ children, redirectTo }) => {
-    return localStorage.getItem("loggedIn")==='false' ? (
-      children
-    ) : (
-      <Navigate to={redirectTo} />
-    );
-  };
+
+
+  // const LoggedIn = ({ children, redirectTo }) => {
+  //   return localStorage.getItem("loggedIn")==='false' || null ? (
+  //     children
+  //   ) : (
+  //     <Navigate to={redirectTo} />
+  //   );
+  // };
 
   return (
     <div className="App">
@@ -30,18 +32,18 @@ function App() {
         <Route
           path="/login"
           element={
-            <LoggedIn redirectTo="/">
+            // <LoggedIn redirectTo="/">
               <Login />
-           </LoggedIn>
+          //  </LoggedIn>
           }
         />
         <Route path="/signup" element={<SignUp />} />
         <Route
           path="/"
           element={
-            // <ProtectedRoute redirectTo="/login">
+            <ProtectedRoute redirectTo="/login">
             <Home />
-            // </ProtectedRoute>
+            </ProtectedRoute>
           }
         />
         <Route

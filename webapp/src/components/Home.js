@@ -1,16 +1,21 @@
 import { useState, useEffect } from "react";
 import Chat from "./HomeComponents/Chat.js";
 import Rooms from "./HomeComponents/Rooms.js";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [chatClicked, setChatClicked] = useState(null);
+    const navigate = useNavigate();
+
 
   console.log(chatClicked)
 
   function getChatClicked (chatClicked) {
     setChatClicked(chatClicked)
   }
+
+
+
 
   return (
     <div className="home">
