@@ -9,7 +9,7 @@ const path = require('path')
 
 require('dotenv').config()
 const app = express()
-const port = process.env.port
+const port = process.env.port || 3001
 const MONGODB_URI = process.env.MONGODB_URI;
 const SECRET = process.env.SECRET
 
@@ -58,9 +58,9 @@ mongoose.connection.once('open', () => {
 
 
 //middleware
+app.use(express.static(path.join(__dirname, "./client/build")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "./client/build")));
 
 
 
