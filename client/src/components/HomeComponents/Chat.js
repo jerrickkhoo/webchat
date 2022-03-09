@@ -7,16 +7,15 @@ import EditIcon from "@material-ui/icons/Edit";
 import axios from "axios";
 import Edit from "@material-ui/icons/Edit";
 import Pusher from "pusher-js";
-
+import dayjs from "dayjs";
 
 const Chat = ({ chatClicked }) => {
   // console.log('chatclicked',chatClicked);
   const [messages, setMessages] = useState([]);
   const [friendData, setFriendData] = useState("");
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log('chatclicked', chatClicked);
+  console.log("chatclicked", chatClicked);
 
-  
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -29,7 +28,7 @@ const Chat = ({ chatClicked }) => {
     };
     getMessages();
   }, [chatClicked._id]);
-  
+
   useEffect(() => {
     const friendID = chatClicked.participants.find((ID) => ID !== user._id);
     const getFriend = async () => {
@@ -44,80 +43,67 @@ const Chat = ({ chatClicked }) => {
   }, [chatClicked.participants, user._id]);
 
   // console.log(messages)
-  
-  useEffect(() => {
+
+  useEffect((e) => {
     const pusher = new Pusher("37faff3d0d75937717d5", {
       cluster: "ap1",
     });
     const channel = pusher.subscribe("messages");
     channel.bind("inserted", function (data) {
-      console.log(data)
-      if (data?.chatID === chatClicked?._id)
-      setMessages([...messages, data])
-    });
-    return () => {
-      channel.unbind_all()
-      channel.unsubscribe()}
-    }, [messages]);
+      console.log(data);
+      if (data?.chatID === chatClicked?._id) 
+      {setMessages([...messages, data])
+    }});
+      // if (data?.senderID === chatClicked?.participants[0] ){
+      // const updateSenderNoti = async () => {
+      // try {
+      //   const response = await axios.put(`/api/chats/sender/${data?.senderID}`);
+      //   console.log(response?.data?.data);
+      // } catch (err) {
+      //   console.log(err);
+      // }}
     
+      // updateSenderNoti()
+    // }
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe()
+    }}, [messages, chatClicked._id]);
 
-  // handleDelete = (e) => {
-    //   e.preventDefault()
-    //   await axios.post(`/api/messages/`)
-    //     .then((response) => {
-      //       console.log(response);
-      //       setFoundUsers(response?.data?.data)
-      //     })
-      //     .catch((err) => {
-        //       alert(err.response.data.message);
-        //     });
-        // }
-        
-        const userMessages = messages.map((item, index) => {
-          // console.log(messages)
-          if (item?.senderID === user._id) {
-            const deletedMessage = {
-              body: 'Message deleted'
-            };
-          
-            return (
-              <p className="chatmessage chatsend">
+  const userMessages = messages.map((item, index) => {
+    // console.log(messages)
+    if (item?.senderID === user._id) {
+      const deletedMessage = {
+        body: "Message deleted",
+      };
+      const date = new Date(item?.updatedAt);
+      console.log("date", typeof date);
+
+      return (
+        <p className="chatmessage chatsend">
           <div className="show">
             <span className="chatname">{item?.senderName}</span>
             {item?.body}
-            <span className="chattimestamp">{item?.updatedAt}</span>
+            <span className="chattimestamp">
+              {dayjs(item?.updatedAt).format("MMMM D, YYYY h:mm A	")}
+            </span>
           </div>
           <div className="hide">
-            {/* <EditIcon
-              className="edit"
+            <DeleteIcon
+              className="delete"
               onClick={async (e) => {
                 e.preventDefault();
                 await axios
-                .put(`/api/messages/${item?._id}`, e.target.body.value)
-                .then((response) => {
-                  console.log(response);
-                })
-                .catch((err) => {
-                  alert(err.response.data.message);
-                });
+                  .put(`/api/messages/delete/${item?._id}`, deletedMessage)
+                  .then((response) => {
+                    console.log(response);
+                  })
+                  .catch((err) => {
+                    alert(err.response.data.message);
+                  });
               }}
-              /> */}
-              <DeleteIcon
-                className="delete"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  await axios
-                    .put(`/api/messages/delete/${item?._id}`, deletedMessage)
-                    .then((response) => {
-                      console.log(response);
-                    })
-                    .catch((err) => {
-                      alert(err.response.data.message);
-                    });
-                }}
-              />
-              </div>
-            
+            />
+          </div>
         </p>
       );
     } else {
@@ -126,7 +112,9 @@ const Chat = ({ chatClicked }) => {
           <div className="show">
             <span className="chatname">{item?.senderName}</span>
             {item?.body}
-            <span className="chattimestamp">{item?.updatedAt}</span>
+            <span className="chattimestamp">
+              {dayjs(item?.updatedAt).format("MMMM D, YYYY h:mm A	")}
+            </span>
           </div>
         </p>
       );
@@ -139,7 +127,7 @@ const Chat = ({ chatClicked }) => {
       body: e.target.body.value,
       chatID: chatClicked?._id,
       senderName: user.username,
-      senderID: user._id
+      senderID: user._id,
     };
     await axios
       .post(`/api/messages/`, body)
@@ -149,10 +137,8 @@ const Chat = ({ chatClicked }) => {
       .catch((err) => {
         alert(err.response.data.message);
       });
-      e.target.body.value=''
+    e.target.body.value = "";
   };
-
-
 
   console.log(friendData);
   return (
@@ -170,10 +156,8 @@ const Chat = ({ chatClicked }) => {
         </div>
       </div>
       <div className="chatbody">
-        <div className='chatbody2'>
-        {userMessages}
-        </div>
-        </div>
+        <div className="chatbody2">{userMessages}</div>
+      </div>
       <div className="chatfooter">
         <form id="chatfooterform" onSubmit={handleSubmit}>
           <input

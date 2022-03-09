@@ -1,6 +1,9 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import DoneIcon from "@material-ui/icons/Done";
+
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -33,13 +36,13 @@ const Settings = () => {
   };
 
   return (
-    <div className="login">
-      <div className="logincontainer">
-        <h1>Settings</h1>
-        <br />
+    <div className="settings">
+      <h1>Settings</h1>
+      <div className="settingscontainer">
         <div>
           <form onSubmit={handleEdit}>
-            <div>
+        
+            <div style={{ padding: "10px" }}>
               <label>Username: </label>
               <input
                 type="text"
@@ -50,7 +53,8 @@ const Settings = () => {
               />
             </div>
 
-            <div>
+            <div style={{ padding: "10px" }}>
+              {" "}
               <label id="font">E-Mail: </label>
               <input
                 type="text"
@@ -61,7 +65,8 @@ const Settings = () => {
               />
             </div>
 
-            <div>
+            <div style={{ padding: "10px" }}>
+              {" "}
               <label id="font">Profile Picture: </label>
               <input
                 type="text"
@@ -71,7 +76,8 @@ const Settings = () => {
               />
             </div>
 
-            <div>
+            <div style={{ padding: "10px" }}>
+              {" "}
               <label id="font">Password: </label>
               <input
                 type="password"
@@ -80,12 +86,12 @@ const Settings = () => {
                 required
               />
             </div>
-
-            <button type="submit" className='loginbutton'>
-              Submit
-            </button>
+            <DoneIcon type="submit" className="loginbutton" />
           </form>
-          <a href="/myprofile">Back</a>
+          <div style={{ padding: "10px" }}></div>
+          <a href="/myprofile" style={{ color: "green" }}>
+            <ArrowBackIosIcon />
+          </a>
         </div>
       </div>
     </div>

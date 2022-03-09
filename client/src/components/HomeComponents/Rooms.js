@@ -21,8 +21,9 @@ useEffect(() => {
   const fetchChats = async () => {
     try{
       const chats = await axios.get(`/api/chats/${user?._id}`)
-      console.log(chats)
-      setRooms(chats.data)
+      // console.log(chats)
+      setRooms(chats.data.reverse())
+      
     } catch (err){
       console.log(err)
     }
@@ -30,12 +31,22 @@ useEffect(() => {
     fetchChats()
   },[user?._id])
 
- 
+ console.log('rooms',rooms)
 
   
   const userChats = rooms.map((item, index) => {
+    //  localStorage.setItem(
+    //    String(`${item?._id}`),
+    //    JSON.stringify('')
+    //  );
       return (
-        <div onClick={()=>{setChatClicked(item)}}>
+        <div onClick={()=>{
+          setChatClicked(item)
+          // localStorage.setItem(
+          //   String(`${item?._id}`),
+          //   JSON.stringify([])
+          // );
+          }}>
           <RoomChat chats={item} />
         </div>
       );})
@@ -72,17 +83,22 @@ const handleSubmit = async (e) => {
       .post('/api/chats',body)
       .then((response) => {
         console.log(response);
-        setFoundUsers(response?.data?.data);
+        // setFoundUsers(response?.data?.data);
+        // localStorage.setItem(
+        //   String(`${response?.data?.data?._id}`),
+        //   JSON.stringify([])
+        // );
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        console.log(err);
       })
-      }}>
+    window.location.reload() 
+   }
+      }>
       <div className="roomchat">
         <Avatar src={item?.img} />
         <div className="roomchatinfo">
           <h2 id="roomchath2">{item?.username}</h2>
-          {/* <p>Last message</p> */}
         </div>
       </div>
     </div>

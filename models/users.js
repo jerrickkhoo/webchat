@@ -15,7 +15,6 @@ const userSchema = Schema(
     password: {
       type: String,
       required: true,
-      minLength: 6,
     },
     img: {
       type: String,

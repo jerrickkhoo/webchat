@@ -62,6 +62,21 @@ router.get("/search/:name", async (req, res) => {
   }
 });
 
+//get by email
+router.get("/searchemail/:emailadd", async (req, res) => {
+  const { emailadd } = req.params;
+  try {
+    const foundUser = await User.find({ email: emailadd  });
+    res.status(200).json({
+      data: foundUser,
+    });
+  } catch (err) {
+    res.status(400).json({
+      error: err,
+    });
+  }
+});
+
 //login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;

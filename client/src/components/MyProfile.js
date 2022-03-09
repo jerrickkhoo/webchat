@@ -1,6 +1,11 @@
 import React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import SettingsIcon from "@material-ui/icons/Settings";
+import DeleteIcon from "@material-ui/icons/Delete";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -15,8 +20,7 @@ const MyProfile = () => {
     localStorage.removeItem("token");
     localStorage.setItem("loggedIn", JSON.stringify(false));
     localStorage.removeItem("chat");
-    navigate('/login', {replace: true})
-
+    navigate("/login", { replace: true });
   };
 
   const handleDelete = async (e) => {
@@ -38,20 +42,36 @@ const MyProfile = () => {
   };
 
   const handleSettings = (e) => {
-    e.preventDefault()
-    navigate('/settings', {replace: true})
-  }
+    e.preventDefault();
+    navigate("/settings", { replace: true });
+  };
 
   return (
-    <div className='login'>
-      <h1>Profile</h1>
-      <img style={{height: '200px'}}src={user?.img} alt='profile pic'/>
-      <h2>Username: {user?.username}</h2>
-      <h2>E-mail: {user?.email}</h2>
-
-      <button onClick={handleSettings}>Settings</button>
-      <button onClick={handleLogOut}>Log Out</button>
-      <button onClick={handleDelete}>Delete account</button>
+    <div className="profile">
+      <h1> My Profile</h1>
+      <div className="profilecontainer">
+        <div className="profileimg">
+          <img
+            style={{ height: "200px", borderRadius: "50%" }}
+            src={user?.img}
+            alt="profile pic"
+          />
+        </div>
+        <div className="profilebody">
+          <div>
+            <h2>{user?.username}</h2>
+            <h2>{user?.email}</h2>
+          </div>
+          <div className="profilebuttons">
+            <SettingsIcon onClick={handleSettings} style={{ color: "grey" }} />
+            <DeleteIcon onClick={handleDelete} style={{ color: "red" }} />
+            <ExitToAppIcon onClick={handleLogOut} style={{ color: "green" }} />
+          </div>
+        </div>
+      </div>
+      <a href="/" style={{ color: "green" }}>
+        <ArrowBackIosIcon />
+      </a>
     </div>
   );
 };

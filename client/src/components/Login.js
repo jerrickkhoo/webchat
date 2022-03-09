@@ -38,8 +38,8 @@ const Login = () => {
       <div className="logincontainer">
         <h1>Log In </h1>
         <br />
-        <form onSubmit={handleSubmit}>
-          <div>
+        <form onSubmit={handleSubmit} >
+          <div style={{ paddingBottom: "20px" }}>
             <label>E-Mail: </label>
             <input type="text" name="email" placeholder="E-Mail" />
           </div>
