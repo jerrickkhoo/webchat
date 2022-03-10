@@ -86,7 +86,9 @@ const Settings = () => {
                 required
               />
             </div>
-            <DoneIcon type="submit" className="loginbutton" />
+            <button type="submit" className="loginbutton">
+              Submit
+              </button>
           </form>
           <div style={{ padding: "10px" }}></div>
           <a href="/myprofile" style={{ color: "green" }}>
