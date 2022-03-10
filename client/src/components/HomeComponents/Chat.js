@@ -166,11 +166,8 @@ const Chat = ({ chatClicked }) => {
           <h3 id="chatheaderinfoh3">{friendData.username}</h3>
           {/* <p id="chatheaderinfop">Last seen at...</p> */}
         </div>
-        <div className="chatheaderright">
-          <IconButton>
-            <SearchIcon />
-          </IconButton>
-        </div>
+        {/* <div className="chatheaderright">
+        </div> */}
       </div>
       <div className="chatbody">
         <div className="chatbody2">{userMessages}</div>
