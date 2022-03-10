@@ -44,31 +44,47 @@ const Chat = ({ chatClicked }) => {
 
   // console.log(messages)
 
-  useEffect((e) => {
-    const pusher = new Pusher("37faff3d0d75937717d5", {
-      cluster: "ap1",
-    });
-    const channel = pusher.subscribe("messages");
-    channel.bind("inserted", function (data) {
-      console.log(data);
-      if (data?.chatID === chatClicked?._id) 
-      {setMessages([...messages, data])
-    }});
-      // if (data?.senderID === chatClicked?.participants[0] ){
-      // const updateSenderNoti = async () => {
-      // try {
-      //   const response = await axios.put(`/api/chats/sender/${data?.senderID}`);
-      //   console.log(response?.data?.data);
-      // } catch (err) {
-      //   console.log(err);
-      // }}
-    
-      // updateSenderNoti()
-    // }
-    return () => {
-      channel.unbind_all();
-      channel.unsubscribe()
-    }}, [messages, chatClicked._id]);
+  useEffect(
+    (e) => {
+      const pusher = new Pusher("37faff3d0d75937717d5", {
+        cluster: "ap1",
+      });
+      const channel = pusher.subscribe("messages");
+      channel.bind("inserted", function (data) {
+        console.log(data);
+        if (data?.chatID === chatClicked?._id) {
+          setMessages([...messages, data])};
+
+        if (data?.senderID === chatClicked?.participants[0]) {
+            const updateNoti2 = async () => {
+              try {
+                const response = await axios.put(`/api/chats/2/${data?.chatID}`);
+                console.log(response?.data?.data);
+              } catch (err) {
+                console.log(err);
+              }
+            };
+            updateNoti2();
+        }
+        if (data?.senderID === chatClicked?.participants[1]) {
+          const updateNoti1 = async () => {
+            try {
+              const response = await axios.put(`/api/chats/1/${data?.chatID}`);
+              console.log(response?.data?.data);
+            } catch (err) {
+              console.log(err);
+            }
+          };
+          updateNoti1();
+        }
+      });
+      return () => {
+        channel.unbind_all();
+        channel.unsubscribe();
+      };
+    },
+    [messages, chatClicked._id, chatClicked.participants]
+  );
 
   const userMessages = messages.map((item, index) => {
     // console.log(messages)
@@ -76,9 +92,7 @@ const Chat = ({ chatClicked }) => {
       const deletedMessage = {
         body: "Message deleted",
       };
-      const date = new Date(item?.updatedAt);
-      console.log("date", typeof date);
-
+     
       return (
         <p className="chatmessage chatsend">
           <div className="show">
@@ -140,7 +154,10 @@ const Chat = ({ chatClicked }) => {
     e.target.body.value = "";
   };
 
-  console.log(friendData);
+ window.setTimeout(function () {
+   window.location.reload();
+ }, 30000);
+
   return (
     <div className="chat">
       <div className="chatheader">

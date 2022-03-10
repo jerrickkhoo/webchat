@@ -36,12 +36,12 @@ router.delete("/:chatID", async (req, res) => {
   }
 });
 
-//noti sender update
-router.put("/sender/:id", async (req, res) => {
+//noti participant 1 add
+router.put("/1/:id", async (req, res) => {
   try {
     const updatedNoti = await Chat.findByIdAndUpdate(
-      req.params.id,
-      { $inc: { senderNoti: 1 } },
+      {_id: req.params.id},
+      { $inc: { participant1: 1} },
       { new: true })
       res.status(200).json({ message: "Noti added", data: updatedNoti });
   } catch (error) {
@@ -50,18 +50,47 @@ router.put("/sender/:id", async (req, res) => {
 });
 
 
-//noti receiver update
-router.put("/receiver/:id", async (req, res) => {
+//noti participant 2 add
+router.put("/2/:id", async (req, res) => {
   try {
     const updatedNoti = await Chat.findByIdAndUpdate(
       req.params.id,
-      { $inc: { receiverNoti: 1 } },
+      { $inc: { participant2: 1 } },
       { new: true })
       res.status(200).json({ message: "Noti added", data: updatedNoti });
   } catch (error) {
     res.status(400).json({ message: "Failed to add noti ", error: error });
   }
 });
+
+//noti participant 2 del
+router.put("/2/del/:id", async (req, res) => {
+  try {
+    const updatedNoti = await Chat.findByIdAndUpdate(
+      req.params.id,
+      { participant2: 0 },
+      { new: true }
+    );
+    res.status(200).json({ message: "Noti added", data: updatedNoti });
+  } catch (error) {
+    res.status(400).json({ message: "Failed to add noti ", error: error });
+  }
+});
+
+//noti participant 1 del
+router.put("/1/del/:id", async (req, res) => {
+  try {
+    const updatedNoti = await Chat.findByIdAndUpdate(
+      req.params.id,
+      { participant1: 0 },
+      { new: true }
+    );
+    res.status(200).json({ message: "Noti added", data: updatedNoti });
+  } catch (error) {
+    res.status(400).json({ message: "Failed to add noti ", error: error });
+  }
+});
+
 
 
 

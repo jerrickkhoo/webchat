@@ -20,6 +20,7 @@ const MyProfile = () => {
     localStorage.removeItem("token");
     localStorage.setItem("loggedIn", JSON.stringify(false));
     localStorage.removeItem("chat");
+    localStorage.removeItem('chatClicked')
     navigate("/login", { replace: true });
   };
 

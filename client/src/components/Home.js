@@ -4,7 +4,9 @@ import Rooms from "./HomeComponents/Rooms.js";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const [chatClicked, setChatClicked] = useState(null);
+  const chatClick = JSON.parse(localStorage.getItem("chatClicked"));
+  const [chatClicked, setChatClicked] = useState(chatClick);
+
     const navigate = useNavigate();
 
 

@@ -5,8 +5,10 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const RoomChat = ({ chats }) => {
   const [friendData, setFriendData] = useState(null);
-  // console.log(chats);
+  console.log('chats',chats);
   const user = JSON.parse(localStorage.getItem("user"));
+  const chatClicked = JSON.parse(localStorage.getItem("chatClicked"));
+
   // const notis = JSON.parse(localStorage.getItem(`${chats._id}`));
   // console.log('notis',notis)
 
@@ -44,6 +46,18 @@ const RoomChat = ({ chats }) => {
       <Avatar src={friendData?.img} />
       <div className="roomchatinfo ">
         <h2 id="roomchath2">{friendData?.username}</h2>
+        <div style={{color:'red'}}>
+          {chats?.participants[1] === user?._id &&
+          chats?.participant2 !== 0 &&
+          chatClicked?._id !== chats._id ?
+             chats?.participant2
+            : null}
+          {chats?.participants[0] === user?._id &&
+          chats?.participant1 !== 0 &&
+          chatClicked?._id !== chats?._id ?
+             chats?.participant1
+            : null}
+        </div>
         <div className="delete" style={{ paddingLeft: "200px" }}>
           <DeleteIcon onClick={handleDelete} />
         </div>
