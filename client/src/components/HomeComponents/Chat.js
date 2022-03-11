@@ -154,9 +154,9 @@ const Chat = ({ chatClicked }) => {
     e.target.body.value = "";
   };
 
- window.setTimeout(function () {
-   window.location.reload();
- }, 30000);
+//  window.setTimeout(function () {
+//    window.location.reload();
+//  }, 30000);
 
   return (
     <div className="chat">
